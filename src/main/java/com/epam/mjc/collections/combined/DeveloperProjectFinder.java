@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Set;
 import java.util.Collections;
+import java.util.Comparator;
 
 public class DeveloperProjectFinder {
 	public List<String> findDeveloperProject(Map<String, Set<String>> projects, String developer) {
@@ -14,7 +15,23 @@ public class DeveloperProjectFinder {
 				developerProjects.add(project.getKey());
 			}
 		}
-		Collections.reverse(developerProjects);
+		Collections.sort(developerProjects, new StringComparator());
 		return developerProjects;
+	}
+}
+
+class StringComparator implements Comparator<String> {
+	public int compare(String s1, String s2) {
+		if (s1.length() > s2.length()) {
+			return -1;
+		} else if (s1.length() < s2.length()) {
+			return 1;
+		} else {
+			if (0 == s1.compareTo(s2)) {
+				return 0;
+			} else {
+				return -s1.compareTo(s2);
+			}
+		}
 	}
 }
